@@ -1,0 +1,38 @@
+#Backend
+my-awesome-project/
+├── src/
+│   ├── cmd/                # Entry point aplikasi (misal: main.go atau index.ts)
+│   ├── delivery/           # Layer 1: Presentation / Transport (HTTP, GRPc, CLI)
+│   │   ├── http/           # Handler/Controller untuk REST API
+│   │   └── middleware/     # Auth, Logging, dll.
+│   ├── service/            # Layer 2: Business Logic (Aturan main aplikasi)
+│   │   ├── user_service.go
+│   │   └── order_service.go
+│   ├── repository/         # Layer 3: Data Access (Query ke Database/API luar)
+│   │   ├── user_repo.go
+│   │   └── database.go
+│   ├── domain/             # Definisi Model/Entity (Skema data)
+│   │   ├── user.go
+│   │   └── order.go
+│   └── config/             # Konfigurasi environment (.env, database connection)
+├── tests/                  # Unit testing & Integration testing
+├── .env                    # Variabel lingkungan
+└── README.md
+
+#UI
+src/
+├── assets/             # Gambar, font, global CSS
+├── components/         # UI Components kecil (Button, Input, Card)
+├── delivery/           # (PRESENTATION LAYER)
+│   ├── pages/          # Halaman utama (Home, Dashboard, Login)
+│   └── layouts/        # Template pembungkus (Navbar, Sidebar)
+├── services/           # (BUSINESS LOGIC LAYER)
+│   ├── auth_service.ts # Logika login, validasi token, logout
+│   └── use_cart.ts     # Logic keranjang belanja (State/Hooks)
+├── repository/         # (DATA ACCESS LAYER)
+│   ├── api/            # Konfigurasi Axios / Fetch
+│   ├── user_repo.ts    # Fungsi panggil API (GET /users, POST /login)
+│   └── local_repo.ts   # Logika LocalStorage atau IndexedDB
+├── domain/             # (MODELS/TYPES)
+│   └── user_types.ts   # Definisi interface atau type TypeScript
+└── utils/              # Helper fungsi (format date, currency, dll)

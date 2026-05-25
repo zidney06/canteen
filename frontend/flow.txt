@@ -1,0 +1,85 @@
+APLIKASI TRACKING PENGELUARAN SISWA / SANTRI
+#Fitur
+- setiap kali siswa mau membayar, harus menyerahkan sebuah kartu yang terdapat qr code ke kasir
+- isi dari qr code adalah uuid siswa yang ada di dalam db dan uuid dalam qr tersebut sudah di enskripsi dan hanya bisa di buka isinya oleh backend
+- kasir meng-scan  qr tersebut untuk mendapatkan informasi mengenai (GET)
+-- nama siswa
+-- kelas
+-- token sekali pakai yang bertahan selama 3 menit
+-- di server, simpan token seklai pakai + uuid siswanya (redis)
+- setelah mendapatkan informasi, kasir memasukan data barang apa saja yang di beli (ini bisa diisi sebelum siswa menyerahkan qr code)
+- lakukan POST ke server
+- di server cek
+-- apakah client sudah terdaftar disistem (agar gak ada yang tembak langsung endpoint)
+-- jangan lupa kasih rate limiter biar gak ke spam
+-- cek apakah uuid siswa ada
+-- cek apakah uuid tidak diblokir
+-- cek apakah toeken yang dikirim sesuai dengan uuid yang bersangkutan
+- tambahkan data belanjaan ke data siswa
+- hapus token atau tandai sudah terpakai
+- kirim res berhasil dengan data yang akan dipakai untuk membuat struk belanjaan
+- di kasir mendapatkan respon lalu cetak struk (bisa as pdf)
+
+TAMBAHAN
+- menambahkan data siswa (sebenarnya ini bisa di gabung dengan data siswa dalam aplikasi absensi. kalau pakai data absensi, kita tinggal req untuk mendapatkan data siswanya aja, ambil uuid, enskripsi, kirim ke client untuk di cetak as qr code)
+- membuat qr code baru
+- menonaktifkan atau memblokir akses belanjaan siswa
+- menampilkan daftar nama siswa dan total belanjaannya dari tiap bulan
+
+#skema
+students
+Nama Kolom,Tipe Data,Keterangan
+id,UUID,Primary Key.
+name,VARCHAR(100),Nama lengkap siswa.
+nis,VARCHAR(20),Nomor Induk Siswa. Diberi UNIQUE INDEX.
+is_blocked,BOOLEAN,Status cekal belanja. Default: false.
+
+cashier_client
+Nama Kolom,Tipe Data,Keterangan
+id,UUID,Primary Key.
+client_name,VARCHAR(100),"Nama pos/lokasi (Contoh: ""Kantin Kejujuran"", ""Koperasi"")."
+client_key,VARCHAR(255),ID Publik Kasir. Diberi UNIQUE INDEX.
+client_secret,VARCHAR(255),Password/Hash rahasia aplikasi kasir untuk login.
+is_active,BOOLEAN,Status aktif (true/false) untuk memutus akses jika hilang/rusak.
+
+purchase (nota)
+Nama Kolom,Tipe Data,Keterangan
+id,UUID,Primary Key.
+student_id,UUID,Foreign Key ke tabel students (INDEX).
+cashier_client_id,UUID,Foreign Key ke tabel cashier_clients (INDEX).
+total_amount,"DECIMAL(10,2)",Total nilai barang belanjaan (untuk kebutuhan statistik).
+transaction_at,TIMESTAMP,Waktu pencatatan. Diberi INDEX untuk filter bulanan.
+
+purchase_items
+Nama Kolom,Tipe Data,Keterangan
+id,BIGINT,Primary Key (Auto-increment bawaan tipe uint di GORM).
+purchase_id,UUID,Foreign Key ke tabel purchases (INDEX).
+item_name,VARCHAR(100),Nama barang yang diambil.
+price,"DECIMAL(10,2)",Harga satuan per barang saat transaksi.
+quantity,INTEGER,Jumlah barang yang diambil (Default: 1).
+
+redis
+Komponen,Tipe Data,Contoh Isi,Keterangan
+Key,String,token:qr:RAHASIA123,Kode acak hasil generate yang dijadikan gambar QR.
+Value,String (UUID),STUDENT_UUID,Berisi ID Siswa pemilik QR tersebut.
+TTL,Integer,300,Umur aktif data dalam satuan detik (5 Menit).
+
+#endpoint
+- isi data siswa
+POST
+req body:
+    name string
+    umur uint
+    alamat:
+        desa string
+        kecamatan string
+        kabupaten string
+
+
+- generate qr code berdasarkan id siswa
+POST
+
+-
+
+#next fiture jika proyek sudah selesai
+-
