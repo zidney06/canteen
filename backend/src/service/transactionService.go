@@ -64,7 +64,7 @@ func (s *TransactionService) GetOrCreateStudent(studentId string) (types.Student
 
 			return newStudent, nil
 		case 2:
-			return types.Student{}, &types.ServiceError{t
+			return types.Student{}, &types.ServiceError{
 				Message:    repoErr.Message,
 				HttpStatus: 400,
 			}
