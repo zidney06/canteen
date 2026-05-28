@@ -83,3 +83,24 @@ POST
 
 #next fiture jika proyek sudah selesai
 -
+
+#routes
+[GIN-debug] GET    /                         --> main.main.func2 (4 handlers)
+[GIN-debug] POST   /api/auth/login           --> server/src/delivery/handlers.(*AuthHandler).ClientLogin-fm (4 handlers)
+[GIN-debug] POST   /api/auth/logout          --> server/src/delivery/handlers.(*AuthHandler).ClientLogout-fm (4 handlers)
+[GIN-debug] GET    /api/client/              --> server/src/delivery/handlers.(*ClientHandler).GetClientList-fm (5 handlers)
+[GIN-debug] GET    /api/client/:clientId     --> server/src/delivery/handlers.(*ClientHandler).GetSpecificClient-fm (5 handlers)
+[GIN-debug] GET    /api/client/cs/:token     --> server/src/delivery/handlers.(*ClientHandler).GetClientSecret-fm (4 handlers)
+[GIN-debug] POST   /api/client/              --> server/src/delivery/handlers.(*ClientHandler).CreateNewClient-fm (5 handlers)
+[GIN-debug] PATCH  /api/client/              --> server/src/delivery/handlers.(*ClientHandler).CreateNewClientSecret-fm (5 handlers)
+[GIN-debug] GET    /api/product/             --> server/src/delivery/handlers.(*ProductHandler).GetProductList-fm (5 handlers)
+[GIN-debug] POST   /api/product/             --> server/src/delivery/handlers.(*ProductHandler).AddProduct-fm (5 handlers)
+[GIN-debug] PATCH  /api/product/:productId   --> server/src/delivery/handlers.(*ProductHandler).UpdateProduct-fm (5 handlers)
+[GIN-debug] DELETE /api/product/             --> server/src/delivery/handlers.(*ProductHandler).DeleteProducts-fm (5 handlers)
+[GIN-debug] POST   /api/student/qr           --> server/src/delivery/handlers.(*StudentHandler).CreateQrCode-fm (4 handlers)
+[GIN-debug] POST   /api/transaction/         --> server/src/delivery/handlers.(*TransactionHandler).MakeTransaction-fm (5 handlers)
+
+- login
+- halaman untuk mendapatkan data client (baik saat pembuatan client baru atau client secret baru)
+- daftar produk, penambahan produk, update produk, hapus produk
+- transaksi

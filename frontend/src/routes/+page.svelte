@@ -7,11 +7,6 @@
     CardHeader,
     CardTitle,
     Container,
-    FormGroup,
-    Input,
-    Form,
-    Button,
-    FormFeedback,
   } from "@sveltestrap/sveltestrap";
   import { onMount } from "svelte";
   import { z } from "zod";
@@ -35,6 +30,17 @@
   onMount(() => {
     // ambil daftar kasir di sini
   });
+
+  // client secret & key disimpan di cache ketika membuka one time url
+  const login = (clientecret: string, clientKey: string) => {
+    if (clientKey.trim() == "" && clientecret.trim() == "") {
+      errors = {
+        password: ["Kunci client dan client secret tidak boleh kosong"],
+        selectedKasir: [],
+      };
+      return;
+    }
+  };
 
   const submit = () => {
     isSubmited = true;
