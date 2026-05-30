@@ -1,8 +1,8 @@
 import z from "zod";
 
 export type ErrorsType = {
-  password?: string[];
-  selectedKasir?: string[];
+  clientSecret?: string[];
+  clientKey?: string[];
 };
 
 export const rawProductSchema = z.object({

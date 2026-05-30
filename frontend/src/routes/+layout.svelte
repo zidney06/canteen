@@ -11,5 +11,4 @@
 
 <Styles />
 
-<p>Navigasi</p>
 {@render children()}

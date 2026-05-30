@@ -9,19 +9,21 @@ import (
 	"server/src/delivery/routes"
 	"server/src/repository"
 	"server/src/service"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	config.InitDB()
-	config.ConnectRdb()
-	limiter := middlewares.NewIPLimiter(5, 10)
-
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
+	config.InitDB()
+	config.ConnectRdb()
+	limiter := middlewares.NewIPLimiter(5, 10)
 
 	err := config.Rdb.Ping(config.Ctx).Err()
 
@@ -31,6 +33,13 @@ func main() {
 
 	r := gin.Default()
 
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"}, // Mengizinkan JWT Token
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 	r.Use(middlewares.RateLimitMiddleware(limiter))
 
 	r.NoRoute(func(c *gin.Context) {

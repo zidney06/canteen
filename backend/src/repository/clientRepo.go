@@ -26,7 +26,7 @@ func NewClientRepo(db *gorm.DB, rdb *redis.Client) *ClientRepo {
 func (r *ClientRepo) GetClientList() ([]types.Client, error) {
 	var clients []types.Client
 
-	result := r.Db.Model(&models.Client{}).Select("client_name", "id").Find(&clients)
+	result := r.Db.Model(&models.Client{}).Select("client_name", "id", "client_key").Find(&clients)
 	if result.Error != nil {
 		log.Println(result.Error)
 		return nil, &types.RepoError{

@@ -80,8 +80,8 @@
     });
   };
 
-  $inspect(dataProduct);
-  $inspect(selectedProducts);
+  // $inspect(dataProduct);
+  // $inspect(selectedProducts);
 </script>
 
 <Container class="border border-3 rounded" fluid>

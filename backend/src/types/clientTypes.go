@@ -15,8 +15,8 @@ type CreateNewClientSecretBody struct {
 }
 
 type NewClientSecretType struct {
-	ClientKey    string
-	ClientSecret string
+	ClientKey    string `json:"clientKey"`
+	ClientSecret string `json:"clientSecret"`
 }
 
 type CreateNewClientBody struct {

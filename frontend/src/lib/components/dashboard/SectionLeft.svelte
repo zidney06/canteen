@@ -28,7 +28,7 @@
   <div class="border p-2">
     <p>Total Amount: {totalAmount}</p>
   </div>
-  <div class="border p-2" style="height: 200px;">
+  <div class="border p-2">
     <h4 class="text-center">Daftar produk</h4>
     {#each dataProduct as item}
       <Card class="my-2">
@@ -38,13 +38,13 @@
           </CardText>
           <ButtonGroup class="align-items-center">
             <Button
-              onclick={() =>
-                addSelectedProducts(item.id, item.name, item.price)}>+</Button
+              onclick={() => deleteSelectedProduct(item.id, item.quantity)}
+              >-</Button
             >
             <span class="align-middle px-2">{item.quantity}</span>
             <Button
-              onclick={() => deleteSelectedProduct(item.id, item.quantity)}
-              >-</Button
+              onclick={() =>
+                addSelectedProducts(item.id, item.name, item.price)}>+</Button
             >
           </ButtonGroup>
         </CardBody>
